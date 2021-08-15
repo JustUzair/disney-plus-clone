@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+// Nav Images
 import logo from "../../images/logo.svg";
 import homeIcon from "../../images/home-icon.svg";
 import searchIcon from "../../images/search-icon.svg";
@@ -46,13 +47,22 @@ const NavWrapper = styled.nav`
   height: 70px;
   background-color: #090b13;
   display: flex;
-
   align-items: center;
   padding: 0 36px;
+  overflow-x: hidden;
+  @media (max-width: 720px) {
+    justify-content: space-between;
+  }
+  @media (max-width: 1023px) {
+    padding: 0 15px;
+  }
 `;
 const Logo = styled.img`
   width: 80px;
   cursor: pointer;
+  @media (max-width: 1023px) {
+    width: 70px;
+  }
 `;
 const NavMenu = styled.div`
   display: flex;
@@ -60,6 +70,17 @@ const NavMenu = styled.div`
   flex: 1;
   margin-left: 20px;
   align-items: center;
+
+  @media (max-width: 1023px) {
+    margin-left: 5px;
+    a {
+      padding: 0 7px !important;
+    }
+  }
+  @media (max-width: 720px) {
+    visibility: hidden;
+    display: none;
+  }
   a {
     display: flex;
     align-items: center;
@@ -101,5 +122,6 @@ const UserImg = styled.img`
   border-radius: 50%;
   justify-self: right;
   cursor: pointer;
+  border: 2px solid white;
 `;
 export default Header;
