@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import styled from "styled-components";
 import img1 from "../../images/slider-badging.jpg";
 import img2 from "../../images/slider-badag.jpg";
+import img3 from "../../images/slider-scale.jpg";
+import img4 from "../../images/slider-scales.jpg";
 
 function ImgSlider() {
   let settings = {
@@ -22,6 +24,12 @@ function ImgSlider() {
       </CarouselContainer>
       <CarouselContainer>
         <img src={img2} alt="Slider image 1" />
+      </CarouselContainer>
+      <CarouselContainer>
+        <img src={img3} alt="Slider image 3" />
+      </CarouselContainer>
+      <CarouselContainer>
+        <img src={img4} alt="Slider image 4" />
       </CarouselContainer>
     </Carousel>
   );
@@ -45,6 +53,11 @@ const Carousel = styled(Slider)`
   }
   li.slick-active button:before {
     color: white;
+  }
+  .slick-next:before,
+  .slick-prev:before {
+    font-size: 1.8rem;
+    color: rgba(249, 249, 249, 0.6);
   }
   @media (max-width: 768px) {
     margin: 0px 20px 0px 20px;

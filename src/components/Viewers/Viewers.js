@@ -35,11 +35,15 @@ const ViewerWrapper = styled.div`
   margin: 0 auto;
   text-align: center;
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     grid-row-gap: 20px;
     grid-column-gap: 10px;
     align-items: center;
-    justify-content: center !important;
+    justify-items: center !important;
+  }
+  @media (max-width: 500px) {
+    /* grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); */
+    grid-row-gap: 20px;
   }
   width: 100%;
 `;
@@ -49,12 +53,7 @@ const ViewerContent = styled.div`
   box-shadow: rgb(0 0 0 / 69%) 0px 26px 30px -10px,
     rgb(0 0 0 / 73%) 0px 16px 10px -10px;
   transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
-  /* @media (max-width: 768px) {
-    grid-column: span 3;
-    &:nth-last-child(1) {
-      grid-column-end: 4;
-    }
-  } */
+
   img {
     width: 100%;
     height: 100%;

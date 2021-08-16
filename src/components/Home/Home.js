@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import Viewers from "../Viewers/Viewers";
+import Movies from "../Movies/Movies";
 import ImgSlider from "../ImageSlider/ImgSlider";
 import bgImg from "../../images/home-background.png";
 function Home() {
@@ -8,6 +9,7 @@ function Home() {
     <HomeWrapper>
       <ImgSlider></ImgSlider>
       <Viewers></Viewers>
+      <Movies></Movies>
     </HomeWrapper>
   );
 }
