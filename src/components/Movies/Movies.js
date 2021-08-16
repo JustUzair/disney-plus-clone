@@ -1,67 +1,32 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { selectMovies } from "../../features/movie/movieSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 function Movies() {
+  const movies = useSelector(selectMovies);
+  console.log(movies);
   return (
     <MoviesWrapper>
       <h4 style={{ marginBottom: 10 }}>Recommended for You</h4>
       <Content>
-        <Wrap>
-          <LazyLoadImage
-            className="lazyImg"
-            visibleByDefault={false}
-            useIntersectionObserver={true}
-            effect="blur"
-            style={{
-              transitionProperty: "transform",
-              transitionDuration: ".45s",
-            }}
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6EA416AD3B15FCC1BADC817A932A57FFF707556DB2233FFCB4CFEB7C8EEDE23C/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt="Movie/Series"
-          />
-        </Wrap>
-        <Wrap>
-          <LazyLoadImage
-            className="lazyImg"
-            visibleByDefault={false}
-            useIntersectionObserver={true}
-            effect="blur"
-            style={{
-              transitionProperty: "transform",
-              transitionDuration: ".45s",
-            }}
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6EA416AD3B15FCC1BADC817A932A57FFF707556DB2233FFCB4CFEB7C8EEDE23C/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt="Movie/Series"
-          />
-        </Wrap>
-        <Wrap>
-          <LazyLoadImage
-            className="lazyImg"
-            visibleByDefault={false}
-            useIntersectionObserver={true}
-            effect="blur"
-            style={{
-              transitionProperty: "transform",
-              transitionDuration: ".45s",
-            }}
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6EA416AD3B15FCC1BADC817A932A57FFF707556DB2233FFCB4CFEB7C8EEDE23C/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt="Movie/Series"
-          />
-        </Wrap>
-        <Wrap>
-          <LazyLoadImage
-            className="lazyImg"
-            visibleByDefault={false}
-            useIntersectionObserver={true}
-            effect="blur"
-            style={{
-              transitionProperty: "transform",
-              transitionDuration: ".45s",
-            }}
-            src="https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/6EA416AD3B15FCC1BADC817A932A57FFF707556DB2233FFCB4CFEB7C8EEDE23C/scale?width=400&aspectRatio=1.78&format=jpeg"
-            alt="Movie/Series"
-          />
-        </Wrap>
+        {movies &&
+          movies.map(movie => (
+            <Wrap key={movie.id}>
+              <LazyLoadImage
+                className="lazyImg"
+                visibleByDefault={false}
+                useIntersectionObserver={true}
+                effect="blur"
+                style={{
+                  transitionProperty: "transform",
+                  transitionDuration: ".25s",
+                }}
+                src={movie.cardImg}
+                alt={movie.title}
+              />
+            </Wrap>
+          ))}
       </Content>
     </MoviesWrapper>
   );
@@ -81,7 +46,7 @@ const Content = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     margin-left: 15px;
   }
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 `;
 const Wrap = styled.div`
   border-radius: 10px;

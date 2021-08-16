@@ -73,17 +73,18 @@ const Background = styled.div`
 `;
 // Image Container and content
 const ImgContainer = styled.div`
-  background: url(${detail1}) no-repeat right center/ cover;
+  background: url(${detail1}) fixed no-repeat right center/ cover;
   background-blend-mode: revert;
   width: 100%;
   height: 78vh;
+
   &:before {
     content: "";
     background: linear-gradient(
       to bottom,
       transparent 12%,
-      rgba(14, 21, 57, 0.3) 35%,
-      rgba(4, 7, 20, 1) 85%
+      rgba(14, 21, 57, 0.3) 30%,
+      rgba(4, 7, 20, 1) 90%
     );
     position: absolute;
     bottom: 0;
@@ -103,6 +104,9 @@ const ImgTitle = styled.div`
   min-width: 190px;
   position: absolute;
   width: 35vw;
+  @media (min-width: 1280px) {
+    margin-top: 0.8rem;
+  }
   padding: 0 calc(3vw + 5px);
   @media (max-width: 200px) {
     padding: 0;
@@ -130,14 +134,14 @@ const Controls = styled.div`
   flex-wrap: wrap;
   align-items: center;
   position: absolute;
-  top: 35%;
-  padding: 0 calc(2vw + 5px);
+  top: 20rem;
+  padding: 0 calc(3.5vw + 5px);
   div {
     display: flex;
   }
-  @media (max-width: 485px) {
+  @media (max-width: 768px) {
     justify-content: flex-start;
-    top: 32%;
+    top: 16rem;
 
     div {
       justify-content: space-between !important;
@@ -204,25 +208,50 @@ const GrpWatchButton = styled(AddButton)`
 // ****************INFO CONTAINER***********
 const InfoContainer = styled.div`
   position: absolute;
-  top: 48%;
+  top: 26rem;
   padding: 0 20px;
-  @media (max-width: 485px) {
-    top: 55%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+
+  @media (max-width: 768px) {
+    top: 26rem;
   }
-  @media (max-width: 329px) {
-    top: 62%;
+  @media (max-width: 350px) {
+    top: 30rem;
   }
 `;
 const Subtitle = styled.div`
   font-weight: 600;
   font-size: 15px;
   min-height: 20px;
+  align-self: flex-start;
+  margin-left: 50px;
+  @media (max-width: 800px) {
+    margin-left: 40px;
+  }
+  @media (max-width: 350px) {
+    margin-left: 20px;
+  }
 `;
 const Description = styled.div`
+  display: flex;
+  justify-content: flex-start;
   margin-top: 10px;
   padding: 0 10px;
   font-size: 20px;
   font-weight: 200;
+  margin-left: 80px;
+  max-width: 70%;
+  @media (max-width: 800px) {
+    max-width: 90%;
+    margin-left: 40px;
+  }
+  @media (max-width: 350px) {
+    max-width: 100%;
+    margin-left: 20px;
+  }
 `;
 
 export default Detail;

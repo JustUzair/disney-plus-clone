@@ -9,10 +9,14 @@ import originalIcon from "../../images/original-icon.svg";
 import movieIcon from "../../images/movie-icon.svg";
 import seriesIcon from "../../images/series-icon.svg";
 import avatar from "../../images/avatar.png";
+// Router Link
+import { Link } from "react-router-dom";
 function Header() {
   return (
     <NavWrapper>
-      <Logo src={logo} alt="disney+ hotstar" />
+      <Link to="/">
+        <Logo src={logo} alt="disney+ hotstar" />
+      </Link>
       <NavMenu>
         <a>
           <img src={homeIcon} alt="home-icon" />

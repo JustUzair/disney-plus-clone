@@ -4,6 +4,7 @@ import Detail from "./components/Detail/Detail";
 import Header from "./components/Header/Header";
 import "./App.css";
 import { Route, Switch } from "react-router-dom";
+import Login from "./components/Login/Login";
 function App() {
   return (
     <div className="App">
@@ -11,6 +12,9 @@ function App() {
       <Switch>
         <Route exact path="/">
           <Home></Home>
+        </Route>
+        <Route exact path="/login">
+          <Login></Login>
         </Route>
         <Route exact path="/detail">
           <Detail></Detail>
