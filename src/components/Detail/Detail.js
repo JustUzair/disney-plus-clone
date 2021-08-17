@@ -21,7 +21,6 @@ function Detail() {
         } else return;
       });
   }, [id]);
-  console.log(movie);
   return (
     <Container>
       {movie && (
