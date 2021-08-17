@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { selectMovies } from "../../features/movie/movieSlice";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 function Movies() {
   const movies = useSelector(selectMovies);
-  console.log(movies);
   return (
     <MoviesWrapper>
       <h4 style={{ marginBottom: 10 }}>Recommended for You</h4>
@@ -13,18 +13,20 @@ function Movies() {
         {movies &&
           movies.map(movie => (
             <Wrap key={movie.id}>
-              <LazyLoadImage
-                className="lazyImg"
-                visibleByDefault={false}
-                useIntersectionObserver={true}
-                effect="blur"
-                style={{
-                  transitionProperty: "transform",
-                  transitionDuration: ".25s",
-                }}
-                src={movie.cardImg}
-                alt={movie.title}
-              />
+              <Link to={`/detail/${movie.id}`}>
+                <LazyLoadImage
+                  className="lazyImg"
+                  visibleByDefault={false}
+                  useIntersectionObserver={true}
+                  effect="blur"
+                  style={{
+                    transitionProperty: "transform",
+                    transitionDuration: ".25s",
+                  }}
+                  src={movie.cardImg}
+                  alt={movie.title}
+                />
+              </Link>
             </Wrap>
           ))}
       </Content>

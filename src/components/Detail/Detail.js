@@ -1,54 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router";
 import styled from "styled-components";
 import detail1 from "../../images/detail-1.jfif";
-import detailTitle1 from "../../images/detail-title-1.png";
 // Button Images
 import grpIcon from "../../images/group-icon.png";
 import playBtn from "../../images/play-icon-black.png";
 import trailerBtn from "../../images/play-icon-white.png";
+import db from "../../Firebase";
 function Detail() {
+  const { id } = useParams();
+  const [movie, setMovie] = useState({});
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    db.collection("movies")
+      .doc(id)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          setMovie(doc.data());
+        } else return;
+      });
+  }, [id]);
+  console.log(movie);
   return (
     <Container>
-      <Background>
-        <ImgContainer></ImgContainer>
-      </Background>
-      <ImgTitle>
-        <img src={detailTitle1} alt="title" />
-      </ImgTitle>
-      <Controls>
-        <PlayButton>
-          <img src={playBtn} alt="play button" /> <span>Play</span>
-        </PlayButton>
-        <TrailerButton>
-          <img src={trailerBtn} alt="trailer button" /> <span>Trailer</span>
-        </TrailerButton>
-        <div>
-          <AddButton>
-            <span>+</span>
-          </AddButton>
-          <GrpWatchButton>
-            <img src={grpIcon} alt="group icon" />
-          </GrpWatchButton>
-        </div>
-      </Controls>
-      <InfoContainer>
-        <Subtitle>2018 * 7m</Subtitle>
-        <Description>
-          {" "}
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate
-          ex, doloremque possimus nisi impedit sapiente. Debitis tempore,
-          exercitationem esse quo asperiores cupiditate sint modi porro amet
-          atque! Corporis magnam iusto nostrum soluta esse itaque maiores porro
-          quidem iste quis. Voluptates repellat eos, temporibus officia
-          obcaecati laborum quam quis magnam, doloremque aliquid illum eum eaque
-          nesciunt. Explicabo, recusandae. Quasi autem placeat quisquam quaerat
-          totam omnis repellendus odio enim incidunt vero animi libero
-          necessitatibus sapiente, amet asperiores reprehenderit eveniet, itaque
-          ad nobis atque. Illo, corrupti aut amet assumenda expedita alias
-          fugiat saepe, odio ducimus temporibus odit. Inventore nihil ullam
-          repellendus mollitia nesciunt.{" "}
-        </Description>
-      </InfoContainer>
+      {movie && (
+        <>
+          <Background>
+            <ImgContainer img={movie.backgroundImg}></ImgContainer>
+          </Background>
+          <ImgTitle>
+            <img src={movie.titleImg} alt="title" />
+          </ImgTitle>
+          <Controls>
+            <PlayButton>
+              <img src={playBtn} alt="play button" /> <span>Play</span>
+            </PlayButton>
+            <TrailerButton>
+              <img src={trailerBtn} alt="trailer button" /> <span>Trailer</span>
+            </TrailerButton>
+            <div>
+              <AddButton>
+                <span>+</span>
+              </AddButton>
+              <GrpWatchButton>
+                <img src={grpIcon} alt="group icon" />
+              </GrpWatchButton>
+            </div>
+          </Controls>
+          <InfoContainer>
+            <Subtitle>{movie.subTitle}</Subtitle>
+            <Description>{movie.description}</Description>
+          </InfoContainer>
+        </>
+      )}
     </Container>
   );
 }
@@ -57,7 +62,7 @@ const Container = styled.div`
   min-width: 200px;
   /* padding: 0 calc(3.5vw + 5px); */
   position: relative;
-  /* min-height: 100vh; */
+  /* min-height: 200vh; */
   @media (max-width: 251px) {
     padding: 0 20px;
   }
@@ -73,7 +78,7 @@ const Background = styled.div`
 `;
 // Image Container and content
 const ImgContainer = styled.div`
-  background: url(${detail1}) fixed no-repeat right center/ cover;
+  background: url(${props => props.img}) no-repeat 60% 10% / cover;
   background-blend-mode: revert;
   width: 100%;
   height: 78vh;
@@ -83,7 +88,7 @@ const ImgContainer = styled.div`
     background: linear-gradient(
       to bottom,
       transparent 12%,
-      rgba(14, 21, 57, 0.3) 30%,
+      rgba(14, 21, 57, 0.3) 50%,
       rgba(4, 7, 20, 1) 90%
     );
     position: absolute;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 // Nav Images
 import logo from "../../images/logo.svg";
@@ -10,50 +10,170 @@ import movieIcon from "../../images/movie-icon.svg";
 import seriesIcon from "../../images/series-icon.svg";
 import avatar from "../../images/avatar.png";
 // Router Link
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import {
+  selectUserEmail,
+  selectUserName,
+  selectUserPhoto,
+  setSignOut,
+  setUserLogin,
+} from "../../features/users/userSlice";
+import { useDispatch } from "react-redux";
+import { auth, provider } from "../../Firebase";
 function Header() {
+  const userName = useSelector(selectUserName);
+  const userPhoto = useSelector(selectUserPhoto);
+  const userEmail = useSelector(selectUserEmail);
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const [click, setClick] = useState(false);
+  // **********************
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+        history.push("/");
+      }
+    });
+  }, []);
+  // ********* Sign in *************
+  const signIn = async () => {
+    auth.signInWithPopup(provider).then(result => {
+      let user = result.user;
+      dispatch(
+        setUserLogin({
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        })
+      );
+    });
+  };
+  //  *************** Sing out ***************
+  const signOut = () => {
+    auth.signOut().then(() => {
+      dispatch(setSignOut());
+      history.push("/login");
+    });
+  };
+
   return (
-    <NavWrapper>
+    <NavWrapper clicked={click}>
       <Link to="/">
         <Logo src={logo} alt="disney+ hotstar" />
       </Link>
-      <NavMenu>
-        <a>
-          <img src={homeIcon} alt="home-icon" />
-          <span>HOME</span>
-        </a>
-        <a>
-          <img src={searchIcon} alt="search-icon" />
-          <span>SEARCH</span>
-        </a>
-        <a>
-          <img src={watchlistIcon} alt="watchlist-icon" />
-          <span>WATCHLIST</span>
-        </a>
-        <a>
-          <img src={originalIcon} alt="originals-icon" />
-          <span>ORIGINALS</span>
-        </a>
-        <a>
-          <img src={movieIcon} alt="movies-icon" />
-          <span>MOVIE</span>
-        </a>
-        <a>
-          <img src={seriesIcon} alt="series-icon" />
-          <span>SERIES</span>
-        </a>
-      </NavMenu>
-      <UserImg src={avatar}></UserImg>
+      {!userName ? (
+        <LoginContainer>
+          <Login onClick={signIn}>Login</Login>
+        </LoginContainer>
+      ) : (
+        <>
+          <NavMenu>
+            <a>
+              <img src={homeIcon} alt="home-icon" />
+              <span>HOME</span>
+            </a>
+            <a>
+              <img src={searchIcon} alt="search-icon" />
+              <span>SEARCH</span>
+            </a>
+            <a>
+              <img src={watchlistIcon} alt="watchlist-icon" />
+              <span>WATCHLIST</span>
+            </a>
+            <a>
+              <img src={originalIcon} alt="originals-icon" />
+              <span>ORIGINALS</span>
+            </a>
+            <a>
+              <img src={movieIcon} alt="movies-icon" />
+              <span>MOVIE</span>
+            </a>
+            <a>
+              <img src={seriesIcon} alt="series-icon" />
+              <span>SERIES</span>
+            </a>
+          </NavMenu>
+
+          <ActionWrapper>
+            <UserImg
+              onClick={() => {
+                setClick(!click);
+              }}
+              src={userPhoto || avatar}
+              alt="profile-avatar "
+            />
+            <SignOutWrapper
+              onClick={signOut}
+              clicked={click}
+              className="signOut"
+              style={{
+                transition: "all .25s  cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+              }}
+            >
+              Sign Out
+            </SignOutWrapper>
+          </ActionWrapper>
+        </>
+      )}
     </NavWrapper>
   );
 }
+const ActionWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+`;
+const SignOutWrapper = styled.a`
+  display: ${props => (props.clicked ? "block" : "none")};
+  opacity: ${props => (props.clicked ? "1" : "0")};
+  transition-delay: 0.3s;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.2);
+  }
+`;
+const LoginContainer = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+`;
+const Login = styled.div`
+  border: 1px solid #f9f9f9;
+  padding: 8px 16px;
+  border-radius: 4px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.6);
+  transition: all 0.2s;
+
+  &:hover {
+    color: rgba(0, 0, 0);
+    background-color: #f9f9f9;
+    border-color: transparent;
+  }
+`;
 const NavWrapper = styled.nav`
-  height: 70px;
+  height: ${props => (props.clicked ? "80px" : "70px")};
   background-color: #090b13;
   display: flex;
   align-items: center;
+  margin-top: ${props => props.clicked && "5px"};
   padding: 0 36px;
   overflow-x: hidden;
+  transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
   @media (max-width: 720px) {
     justify-content: space-between;
   }
