@@ -46,16 +46,22 @@ function Header() {
   }, []);
   // ********* Sign in *************
   const signIn = async () => {
-    auth.signInWithPopup(provider).then(result => {
-      let user = result.user;
-      dispatch(
-        setUserLogin({
-          name: user.displayName,
-          email: user.email,
-          photo: user.photoURL,
-        })
-      );
-    });
+    auth
+      .signInWithPopup(provider)
+      .then(result => {
+        let user = result.user;
+        dispatch(
+          setUserLogin({
+            name: user.displayName,
+            email: user.email,
+            photo: user.photoURL,
+          })
+        );
+      })
+      .catch(err => {
+        console.error(err);
+        history.push("/login");
+      });
   };
   //  *************** Sing out ***************
   const signOut = () => {
