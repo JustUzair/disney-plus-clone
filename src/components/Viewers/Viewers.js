@@ -130,7 +130,7 @@ const ViewerWrapper = styled.div`
   margin: 0 auto;
   text-align: center;
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     grid-row-gap: 20px;
     grid-column-gap: 10px;
     align-items: center;
