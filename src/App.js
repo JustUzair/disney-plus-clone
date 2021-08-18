@@ -15,17 +15,21 @@ function App() {
     <div className="App">
       <Header></Header>
 
-      <Switch>
-        <Route exact path="/login">
-          <Login></Login>
-        </Route>
-        <Route exact path="/">
-          <Home></Home>
-        </Route>
-        <Route exact path="/detail/:id">
-          <Detail></Detail>
-        </Route>
-      </Switch>
+      {!userName ? (
+        <Login></Login>
+      ) : (
+        <Switch>
+          <Route exact path="/login">
+            <Login></Login>
+          </Route>
+          <Route exact path="/">
+            <Home></Home>
+          </Route>
+          <Route exact path="/detail/:id">
+            <Detail></Detail>
+          </Route>
+        </Switch>
+      )}
     </div>
   );
 }
